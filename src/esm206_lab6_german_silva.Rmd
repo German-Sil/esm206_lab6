@@ -104,3 +104,11 @@ How can I actually include my model equation in a report?
 extract_eq(model = penguin_lm, use_coefs = TRUE)
 ```
 
+
+```{r}
+plot(penguin_lm)
+```
+
+- Scale/Location and Residuals v Fitted: are they generally close to being a general 0 value
+- QQ plot for residuals: Are the residuals normally distributed. 
+- Residuals vs leverage: Which points are having a weight against the model and the direction that it is going. 
