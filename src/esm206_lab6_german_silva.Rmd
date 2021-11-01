@@ -5,26 +5,61 @@ date: "11/1/2021"
 output: html_document
 ---
 
-```{r setup, include=FALSE}
+```{r setup, include=FALSE, message=FALSE, warning=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+
+# Attach packages
+library(tidyverse)
+library(palmerpenguins)
+library(broom)
+library(equatiomatic)
 ```
 
-## R Markdown
+## Example of rank-based test
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+Alternatives to parametric tests (t-tests and ANOVA)
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+we'll make our own samples, using a pseudorandom generator.
 
-```{r cars}
-summary(cars)
+```{r}
+set.seed(1414)
+
+gp_1 <- sample.int(20, size = 15, replace = TRUE)
+
+set.seed(1424)
+gp_2 <- sample.int(30, size = 15, replace = TRUE)
 ```
 
-## Including Plots
+```{r}
+hist(gp_1)
 
-You can also embed plots, for example:
+hist(gp_2)
 
-```{r pressure, echo=FALSE}
-plot(pressure)
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+try a t-test:
+```{r}
+t.test(gp_1, gp_2)
+```
+
+What is the meaning of the p-value?
+
+the p-value of 0.198 means that is the two groups had the same mean that there would be a 19.8% chance that we would get sample means *at least this different* from each other (this is with taking into account spread and n).
+
+we retain (fail to reject) the null hypothesis. >> there is no significant difference between the means of group 1 and group 2.
+
+Warning: People get weirdly upset if you say you "accept" the null hypothesis
+
+Now let's compare this to a rank-based test.
+
+## Mann-Whitney U unpaired rank-based test
+
+```{r}
+mwu <- wilcox.test(gp_1, gp_2)
+
+mwu
+```
+
+the p-value of 0.28 means that if the two groups had the same ranks that there would be a 28% chance that we would get sample ranks *at least this different* from each other by random chance alone.
+
+There is no significant difference in ranks (often you'll see medians) between group 1 and group 2 (statistical summary). 
