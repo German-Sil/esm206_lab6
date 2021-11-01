@@ -95,6 +95,12 @@ penguin_lm
 ```{r}
 penguin_lm_tidy <- broom::tidy(penguin_lm)
 
-penguin_lm_tidy
+penguin_lm_tidy # we will have more information about this in the upcoming lectures
+```
+
+How can I actually include my model equation in a report?
+
+```{r}
+extract_eq(model = penguin_lm, use_coefs = TRUE)
 ```
 
