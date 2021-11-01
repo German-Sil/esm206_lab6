@@ -63,3 +63,38 @@ mwu
 the p-value of 0.28 means that if the two groups had the same ranks that there would be a 28% chance that we would get sample ranks *at least this different* from each other by random chance alone.
 
 There is no significant difference in ranks (often you'll see medians) between group 1 and group 2 (statistical summary). 
+
+
+
+## Linear regression
+
+Simple linear regression (single dependent variable, a single independent variable)
+
+```{r, include = FALSE}
+# Make an exploratory plot of penguin body mass (y-axis) versus flipper length (x-axis)
+
+ggplot(penguins, aes(x=flipper_length_mm, y = body_mass_g)) +
+  geom_point() +
+  geom_smooth(method = "lm")
+```
+
+Find a linear regression model using ordinary least squares describing the relationship between flipper length and body mass for these penguins.
+
+3 pieces:
+
+- What type of model?
+- What is the relationship to model (DV ~ IV(s))
+- Where is the data that's used to create this model?
+
+```{r}
+penguin_lm <- lm(body_mass_g ~ flipper_length_mm, penguins)
+
+penguin_lm
+```
+
+```{r}
+penguin_lm_tidy <- broom::tidy(penguin_lm)
+
+penguin_lm_tidy
+```
+
